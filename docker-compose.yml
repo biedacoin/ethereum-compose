@@ -1,0 +1,29 @@
+---
+version: '3'
+services:
+  bootnode:
+    image: "${COMPOSE_PROJECT_NAME}-bootnode"
+    build:
+      context: .
+      dockerfile: docker/bootnode.Dockerfile
+    environment:
+      - VERBOSITY
+    volumes: &volumes
+      - shared:/shared:Z
+  geth:
+    image: "${COMPOSE_PROJECT_NAME}-geth"
+    build:
+      context: .
+      dockerfile: docker/geth.Dockerfile
+      args:
+        - N_ACCOUNTS
+    environment:
+      - VERBOSITY
+      - NETWORKID
+    volumes: *volumes
+    depends_on:
+      - bootnode
+volumes:
+  shared:
+...
+# vim:ts=2:sw=2:et:syn=yaml:
