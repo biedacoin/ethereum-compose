@@ -2,7 +2,9 @@ FROM alpine:3.7 as build
 
 RUN apk --no-cache add go git make gcc musl-dev linux-headers ca-certificates
 
-RUN git clone --depth=1 https://github.com/ethereum/go-ethereum /tmp/go-ethereum
+ARG GO_ETHEREUM_REVISION
+
+RUN git clone --depth=1 -b ${GO_ETHEREUM_REVISION} https://github.com/ethereum/go-ethereum /tmp/go-ethereum
 RUN cd /tmp/go-ethereum && make all
 
 ###

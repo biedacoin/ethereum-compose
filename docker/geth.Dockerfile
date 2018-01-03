@@ -2,13 +2,17 @@ FROM alpine:3.7 as build
 
 RUN apk --no-cache add go git cmake make gcc g++ musl-dev boost-dev linux-headers ca-certificates
 
-RUN git clone --depth=1 --recursive https://github.com/ethereum/solidity.git /tmp/solidity
+ARG SOLIDITY_REVISION
+
+RUN git clone --depth=1 -b ${SOLIDITY_REVISION} --recursive https://github.com/ethereum/solidity.git /tmp/solidity
 RUN mkdir -p /tmp/solidity/build/ \
  && cd /tmp/solidity/build/ \
  && cmake .. \
  && make -j4
 
-RUN git clone --depth=1 https://github.com/ethereum/go-ethereum /tmp/go-ethereum
+ARG GO_ETHEREUM_REVISION
+
+RUN git clone --depth=1 -b ${GO_ETHEREUM_REVISION} https://github.com/ethereum/go-ethereum /tmp/go-ethereum
 RUN cd /tmp/go-ethereum && make all
 
 ###

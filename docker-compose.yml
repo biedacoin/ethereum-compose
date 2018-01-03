@@ -7,6 +7,8 @@ services:
     build:
       context: .
       dockerfile: docker/bootnode.Dockerfile
+      args:
+        - GO_ETHEREUM_REVISION=v1.7.3
     environment:
       - VERBOSITY
     volumes: &volumes
@@ -18,6 +20,8 @@ services:
       context: .
       dockerfile: docker/geth.Dockerfile
       args:
+        - SOLIDITY_REVISION=v0.4.19
+        - GO_ETHEREUM_REVISION=v1.7.3
         - N_ACCOUNTS
     environment:
       - VERBOSITY
