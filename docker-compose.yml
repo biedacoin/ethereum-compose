@@ -1,7 +1,8 @@
 ---
-version: '3'
+version: '2.2'
 services:
   bootnode:
+    scale: 1
     image: "${COMPOSE_PROJECT_NAME}-bootnode"
     build:
       context: .
@@ -11,6 +12,7 @@ services:
     volumes: &volumes
       - shared:/shared:Z
   geth:
+    scale: 3
     image: "${COMPOSE_PROJECT_NAME}-geth"
     build:
       context: .
